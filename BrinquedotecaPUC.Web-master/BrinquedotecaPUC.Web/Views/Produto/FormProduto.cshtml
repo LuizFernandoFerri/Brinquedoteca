@@ -1,0 +1,235 @@
+﻿@using BrinquedotecaPUC.Web.Models.Produto;
+@model ProdutoViewModel
+
+@{
+    var urlImagem = !string.IsNullOrEmpty(Model.UrlImagem) ? Model.UrlImagem : "https://via.placeholder.com/300x250";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon"
+          type="image/png"
+          href="../image/SVG-BrinquedotecaPUC.png" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+          crossorigin="anonymous" />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <link rel="stylesheet" href="~/css/usuario.css" />
+    <link rel="stylesheet" href="~/css/modal-message.css" />
+    <title>BrinquedotecaPUC - Produtos</title>
+</head>
+<body>
+    <!-- Modal mensagem login-->
+    <div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <h5 class="modal-title" id="loadingModalLabel">Aguarde. Cadastrando produto...</h5>
+                    <div class="progress mt-3">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Cabeçalho-->
+    <!--asp-controller="Produto" asp-action="Salvar">-->
+    <form id="formProduto">
+        <section>
+            <partial name="/Views/Shared/_LayoutMenu.cshtml" />
+            <div class="row p-1 px-3" style="background-color: #eeecec;">
+                <div class="d-flex justify-content-end" style="width: 85%;">
+                    <a class="btn btn btn-outline-dark btn-sm px-2 mt-1 mb-1 me-2" href="@Url.Action("Index", "Produto")" role="button">
+                        <i class="fa fa-reply"></i> <span class="hidden-xs"> Voltar Filtro </span>
+                    </a>
+                    <button id="btnSalvar" type="submit" class="btn btn-primary btn-sm px-4 mt-1 mb-1">
+                        <i class="fa fa-check"></i><span class="hidden-xs"> Salvar </span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        @Html.HiddenFor(model => model.IdProduto)
+        @Html.HiddenFor(model => model.UrlImagem)
+        @Html.HiddenFor(model => model.IsEdit)
+
+        <!--Form-->
+        <section>
+            <div class="container mt-1">
+                <h4 class="text-start p-1 px-3 mb-3 mt-3 titulo text-light">
+                    <a class="btn" data-bs-toggle="collapse" href="#formProduto" role="button" aria-expanded="true" aria-controls="formProduto">
+                        <i class="fa fa-arrow-circle-o-right"></i><span class="text-light">Cadastro do produto</span>
+                    </a>
+                </h4>
+                <div class="collapse show" id="formCliente">
+                    <div class="card card-body">
+                        <div class="row col-md-12">
+                            <div class="row col-md-8">
+                                <div class="col-md-3">
+                                    <label for="basic-url" class="form-label">Código produto</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text"
+                                               class="form-control"
+                                               aria-describedby="basic-addon2" 
+                                               asp-for="CodProduto"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="basic-url" class="form-label">Nome do brinquedo</label>
+                                        <div class="input-group">
+                                            <input type="text"
+                                                   class="form-control"
+                                                   aria-describedby="basic-addon3 basic-addon4"
+                                                   asp-for="Descricao"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- CATEGORIA DO BRINQUEDO -->
+                                <div class="form-group col-md-3">
+                                    <label for="IdCategoria">Categoria</label>
+                                    <div class="input-group mb-3">
+                                        <select class="form-select" asp-for="IdCategoria">
+                                            <option selected></option>
+                                            <option value="1">Educativos</option>
+                                            <option value="2">Criativos</option>
+                                            <option value="3">Interativos e Tecnológicos</option>
+                                            <option value="4">De Construção</option>
+                                            <option value="5">Esportivos</option>
+                                            <option value="6">Fantasias e Roupas</option>
+                                            <option value="7">Jogos de Tabuleiro e Cartas</option>
+                                            <option value="8">Brinquedos de Imitação</option>
+                                            <option value="9">Ao ar livre</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- IMAGEM DO PRODUTO -->
+                            <div class="col-md-4" style="position: relative;">
+                                <div i style="width: 1px; background-color: gray; position: absolute; left: 0; top: 0; bottom: 0;"></div>
+                                <!-- Div centralizando a imagem -->
+
+                                <div id="imageUploadArea" 
+                                     class="d-flex justify-content-center align-items-center border border-secondary"
+                                     style="width: 100%; height: 250px; cursor: pointer; background-color: #f8f9fa; overflow: hidden;">
+                                    <img id="previewImage"
+                                         src="@urlImagem"
+                                         alt="Clique aqui para carregar uma imagem"
+                                         style="width: 100%; height: 100%; object-fit: contain;">
+                                    
+                                </div>
+                                <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <!-- FAIXA ETÁRIA DO BRINQUEDO -->
+                            <div class="form-group col-md-2">
+                                <label for="FaixaEtaria">Faixa etária</label>
+                                <div class="input-group mb-3">
+                                    <select class="form-select" asp-for="IdFaixaEtaria">
+                                        <option selected></option>
+                                        <option value="1">0 a 2 anos</option>
+                                        <option value="2">3 a 5 anos</option>
+                                        <option value="3">6 a 8 anos</option>
+                                        <option value="4">9 a 12 anos</option>
+                                        <option value="5">13 anos ou mais</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- ESTADO DE CONSERVAÇÃO DO BRINQUEDO -->
+                            <div class="form-group col-md-2">
+                                <label for="IdEstConservacao">Estado conservação</label>
+                                <div class="input-group mb-3">
+                                    <select class="form-select" asp-for="IdEstConservacao">
+                                        <option selected></option>
+                                        <option value="1">Novo</option>
+                                        <option value="2">Seminovo</option>
+                                        <option value="3">Usado</option>
+                                        <option value="4">Danificado</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div id="app" class="form-group col-md-2">
+                                <label for="Quantidade">Quantidade</label>
+                                <div class="input-group mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           v-model="quantidade"
+                                           maxlength="2"
+                                           asp-for="Quantidade"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="Status">Status</label>
+                                <div class="input-group mb-3">
+                                    <select class="form-select" asp-for="Status">
+                                        <option selected></option>
+                                        <option value="1">Disponível</option>
+                                        <option value="2">Indisponível</option>
+                                        <option value="3">Desativado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="basic-url" class="form-label">Observações gerais do brinquedo</label>
+                                    <div class="input-group">
+                                        <textarea class="form-control"
+                                                  aria-describedby="basic-addon3 basic-addon4"
+                                                  asp-for="Observacao"
+                                                  rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+
+    <partial name="/Views/Shared/_ModalError.cshtml" />
+
+    <script type="text/javascript" src="~/Scripts/App/Produto/form-produto.js" />
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            crossorigin="anonymous"></script>
+
+    // <script>
+    //     document.addEventListener("DOMContentLoaded", function () {
+    //        var form = document.querySelector("form");
+    //        form.addEventListener("submit", function () {
+    //           var loadingModal = new bootstrap.Modal(document.getElementById("loadingModal"));
+    //           loadingModal.show();
+    //        });
+    //     });
+
+    //     var errorMessage = '@TempData["ModalError"]';
+    //     var successMessage = '@TempData["ModalSuccess"]';
+    //     if (errorMessage || successMessage) {
+    //         var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+    //         errorModal.show();
+
+    // </script>
+</body>
+
+</html>

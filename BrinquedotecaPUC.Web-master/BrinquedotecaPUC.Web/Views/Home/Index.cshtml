@@ -1,0 +1,514 @@
+﻿@{
+    //ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon"
+          type="image/png"
+          href="/src/img/SVG-BrinquedotecaPUC-removebg.png" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+          crossorigin="anonymous" />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/css/style-default.css" />
+    <link rel="stylesheet" href="~/css/webpage.css" />
+    <title>BrinquedotecaPUC</title>
+</head>
+<body>
+    <!--Cabeçalho-->
+    <section>
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="~/image/SVG-BrinquedotecaPUC-removebg.png"
+                         class="logo"
+                         alt="" />BrinquedotecaPUC
+                </a>
+                <button class="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navmenu">
+                    <span class="toggler-icon top-bar"></span>
+                    <span class="toggler-icon middle-bar"></span>
+                    <span class="toggler-icon bottom-bar"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navmenu">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#sobre">O BrinquedotecaPUC</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#produtos">Nossos Produtos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#perguntas">Perguntas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#clientes">Clientes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#contato">Fale Conosco</a>
+                        </li>
+                    </ul>
+
+                    <div class="text-start">
+                        <a id="btn-login" asp-action="Index" asp-controller="Login">
+                            <i class="bi bi-person-circle"></i>
+                            Entrar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </section>
+
+    <!--Conteúdo Principal-->
+    <section class="bg-dark text-light p-5 p-lg-0 pt-lg-5 text-center text-sm-start">
+        <div class="container">
+            <div class="d-sm-flex align-itens-center justify-content-between"
+                 id="sobre">
+                <div>
+                    <h1>Conheça o <span class="conheca">BrinquedotecaPUC</span></h1>
+                    <p class="lead my-4">
+                        O BrinquedotecaPUC têm o objetivo de oferecer alta performace em solucões altomotivas,
+                        visando sempre a segurança na prestação de Serviços para nossos clintes.
+
+                    </p>
+                    <button class="btn btn-primary btn-lg"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modal-contato"
+                            #modal-contato>
+                        Entre em contato
+                    </button>
+
+                    <!--Modal-->
+                    <div class="modal fade text-dark"
+                         id="modal-contato"
+                         tabindex="-1"
+                         aria-labelledby="modal-contatoLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="modal-contatoLabel">
+                                        Requisite um contato
+                                    </h1>
+                                    <button type="button"
+                                            class="btn-close"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="lead">
+                                        Preencha o formulário e entraremos em contato com você!
+                                    </p>
+                                    <form>
+                                        <div class="mb-3">
+                                            <label for="nome" class="col form-label">Nome:</label>
+                                            <input type="text" class="form-control" id="nome" />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="empresa" class="col form-label">Empresa:</label>
+                                            <input type="text" class="form-control" id="empresa" />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="email" class="col form-label">E-mail:</label>
+                                            <input type="text" class="form-control" id="email" />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="telefone" class="col form-label">Telefone:</label>
+                                            <input type="text" class="form-control" id="telefone" />
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button"
+                                            class="btn btn-secondary"
+                                            data-bs-dismiss="modal">
+                                        Fechar
+                                    </button>
+                                    <button type="button" class="btn btn-primary">
+                                        Enviar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <img src="~/image/undraw_automobile_repair_ywci.svg"
+                     class="img-fluid w-60 d-none d-sm-block"
+                     alt="" />
+            </div>
+        </div>
+    </section>
+
+    <!--NewsLetter-->
+    <section class="text-light p-5 newsletter">
+        <div class="container">
+            <div class="d-md-flex justify-content-between align-itens-center">
+                <h3 class="mb-3 mb-md-0">Solicite o contato do nosso time</h3>
+                <div class="input-group news-input">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Insira seu e-mail"
+                           aria-label="Insira seu e-mail"
+                           aria-describedby="button-addon2" />
+                    <button class="btn btn-dark text-light btn-lg news-button">
+                        Enviar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Serviços-->
+    <!--Cartões-->
+    <section id="produtos" class="p-5">
+        <div class="container">
+            <div class="row text-center g-4">
+                <div class="col-md">
+                    <div class="card bg-dark text-light">
+                        <div class="card-body text-center">
+                            <div class="mb-3 h1"><i class="bi bi-car-front"></i></div>
+                            <h3 class="card-title">Gestão de veículos</h3>
+                            <p class="card-text py-4">
+                                Possuímos em nosso estoque peças de reposição originais e genuínas, temos parcerias com os
+                                melhores fornecedores em componentes e acessórios.
+                            </p>
+                            <a href="#" class="btn btn-primary">Saiba Mais</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="card bg-secondary text-light">
+                        <div class="card-body text-center">
+                            <div class="mb-3 h1"><i class="bi bi-calendar3"></i></div>
+                            <h3 class="card-title">Agendamento de Serviços</h3>
+                            <p class="card-text py-4">
+                                BrinquedotecaPUC tem a opção de agendamento de produtos e serviços de acordo
+                                com sua disponibilidade.
+                                Preencha o formulário abaixo ou clique no botão ao lado para realizar o agendamento
+                            </p>
+                            <a href="#" class="btn btn-dark">Saiba Mais</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="card bg-dark text-light">
+                        <div class="card-body text-center">
+                            <div class="mb-3 h1"><i class="bi bi-phone-vibrate"></i></div>
+                            <h3 class="card-title">Clientes Atualizados</h3>
+                            <p class="card-text py-4">
+                                Nosso cliente pode acompanhar em tempo real o estágio do serviço do seu veículo,
+                                através dos e-mails que são enviados automáticos em todo processo. Possuímos também
+                                WhatsApp para atendimento facilitando a comunicação das informações solicitadas pelo cliente.
+
+                            </p>
+                            <a href="#" class="btn btn-primary">Saiba Mais</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--Gestão de Atividades-->
+
+    <section id="atividades" class="p-5">
+        <div class="container">
+            <div class="row align-itens-center justify-content-between">
+                <div class="col-md">
+                    <img src="~/image/undraw_report_re_f5n5.svg"
+                         alt="gráficos"
+                         class="img-fluid img-servicos" />
+                </div>
+                <div class="col-md px-5 texto-servicos">
+                    <h2>Acompanhamento de Ordens de Serviços</h2>
+                    <p class="lead">
+                        A Ordem de Serviço contém as informações importantes para executar um serviço. Ela inclui
+                        dados tais como, nome do cliente, data e o local, mesmo em caso de realização do serviço na loja.
+                        Esse módulo é bastante utilizado pelas empresas para manter a organização e o andamento dos
+                        serviços , funcionando como uma autonação para seu empresa e liberação para que se
+                        inicie um serviço.
+                    </p>
+                    <p class="lead">
+                        Visto isso, através da Ordem de Serviço para oficina mecânica do BrinquedotecaPUC, sua empresa irá,
+                        manter e gerir dados importantes referentes a uma determinada execução de serviço em algum
+                        veiculo, com a Ordem de serviço para oficina mecânica você poderá compartilhar e visualizar
+                        todas as ordens de serviços abertas para sua oficina com sua equipe.
+                    </p>
+                    <a href="#" class="btn btn-secondary mt-3"><i class="bi bi-chevron-right"></i>Saiba Mais</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="atualizacao" class="p-5 text-light">
+        <div class="container">
+            <div class="row align-itens-center justify-content-between">
+                <div class="col-md px-5 texto-servicos">
+                    <h2>Atualização em tempo real</h2>
+                    <p class="lead">
+                        O BrinquedotecaPUC oferece atualização em tempo real. Mesmo assim, você pode criar relatórios próprios,
+                        dinâmicos, de forma simples, em tempo real, com informações específicas.
+
+                    </p>
+                    <p class="lead">
+                        O BrinquedotecaPUC pode ser acessado também pelo celular ou tablet. Não é necessário baixar ou instalar
+                        qualquer aplicativo, basta acessar pelo navegador do seu aparelho.
+
+                    </p>
+                    <a href="#" class="btn btn-light mt-3"><i class="bi bi-chevron-right"></i>Saiba Mais</a>
+                </div>
+                <div class="col-md">
+                    <img src="~/image/undraw_confirmed_re_sef7.svg"
+                         alt="gráficos"
+                         class="img-fluid img-servicos" />
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Perguntas Frequentes-->
+
+    <section id="perguntas" class="p-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Perguntas Frequentes</h2>
+            <div class="accordion accordion-flush" id="perguntas-modal">
+                <!--Item 1-->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseOne">
+                            Item 1
+                        </button>
+                    </h2>
+                    <div class="accordion-collapse collapse"
+                         id="flush-collapseOne"
+                         data-bs-parent="#perguntas-modal">
+                        <div class="accordion-body">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor,
+                            ad culpa. Totam amet quos nobis natus, laborum eveniet modi
+                            aliquam vitae, culpa molestiae veritatis. Quisquam!
+                        </div>
+                    </div>
+                </div>
+                <!--Item 2-->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingTwo">
+                        <button class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseTwo">
+                            Item 2
+                        </button>
+                    </h2>
+                    <div class="accordion-collapse collapse"
+                         id="flush-collapseTwo"
+                         data-bs-parent="#perguntas-modal">
+                        <div class="accordion-body">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor,
+                            ad culpa. Totam amet quos nobis natus, laborum eveniet modi
+                            aliquam vitae, culpa molestiae veritatis. Quisquam!
+                        </div>
+                    </div>
+                </div>
+                <!--Item 3-->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseThree">
+                            Item 3
+                        </button>
+                    </h2>
+                    <div class="accordion-collapse collapse"
+                         id="flush-collapseThree"
+                         data-bs-parent="#perguntas-modal">
+                        <div class="accordion-body">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor,
+                            ad culpa. Totam amet quos nobis natus, laborum eveniet modi
+                            aliquam vitae, culpa molestiae veritatis. Quisquam!
+                        </div>
+                    </div>
+                </div>
+                <!--Item 4-->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingFour">
+                        <button class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseFour">
+                            Item 4
+                        </button>
+                    </h2>
+                    <div class="accordion-collapse collapse"
+                         id="flush-collapseFour"
+                         data-bs-parent="#perguntas-modal">
+                        <div class="accordion-body">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor,
+                            ad culpa. Totam amet quos nobis natus, laborum eveniet modi
+                            aliquam vitae, culpa molestiae veritatis. Quisquam!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Clientes-->
+    <section class="p-5" id="clientes">
+        <div class="container">
+            <h2 class="text-center text-white">Nossos Clientes</h2>
+            <p class="lead text-center text-white mb-5">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+                velit sunt maxime corrupti, et neque.
+            </p>
+            <div class="row g-4">
+                <!--Cliente1-->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <img src="https://randomuser.me/api/portraits/men/1.jpg"
+                                 class="rounded-circle mb-3"
+                                 alt="" />
+                            <h3 class="card-title mb-3">Júlio Silva - Localiza</h3>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                Dicta, unde?
+                            </p>
+                            <a href="https://www.localiza.com/brasil/pt-br">
+                                <i class="bi bi-browser-chrome text-dark m-1"></i>
+                            </a>
+                            <a href="https://linkedin.com">
+                                <i class="bi bi-linkedin text-dark m-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!--Cliente2-->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <img src="https://randomuser.me/api/portraits/women/15.jpg"
+                                 class="rounded-circle mb-3"
+                                 alt="" />
+                            <h3 class="card-title mb-3">Mislene - Banzai</h3>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                Dicta, unde?
+                            </p>
+                            <a href="https://www.localiza.com/brasil/pt-br">
+                                <i class="bi bi-browser-chrome text-dark m-1"></i>
+                            </a>
+                            <a href="https://linkedin.com">
+                                <i class="bi bi-linkedin text-dark m-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!--Cliente3-->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <img src="https://randomuser.me/api/portraits/women/25.jpg"
+                                 class="rounded-circle mb-3"
+                                 alt="" />
+                            <h3 class="card-title mb-3">Andriana - Minas Motors</h3>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                Dicta, unde?
+                            </p>
+                            <a href="https://www.localiza.com/brasil/pt-br">
+                                <i class="bi bi-browser-chrome text-dark m-1"></i>
+                            </a>
+                            <a href="https://linkedin.com">
+                                <i class="bi bi-linkedin text-dark m-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!--Cliente4-->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <img src="https://randomuser.me/api/portraits/men/25.jpg"
+                                 class="rounded-circle mb-3"
+                                 alt="" />
+                            <h3 class="card-title mb-3">Cristóvão - Harley Davidson</h3>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                Dicta, unde?
+                            </p>
+                            <a href="https://www.localiza.com/brasil/pt-br">
+                                <i class="bi bi-browser-chrome text-dark m-1"></i>
+                            </a>
+                            <a href="https://linkedin.com">
+                                <i class="bi bi-linkedin text-dark m-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Contato-->
+    <section class="p-5" id="contato">
+        <div class="container">
+            <div class="row g-4 mt-3">
+                <div class="col-md">
+                    <h2 class="text-center mb-4">Nossos Contatos</h2>
+                    <ul class="list-group list-group-flush lead">
+                        <li class="list-group-item">
+                            <span class="fw-bold">Endereço: </span> Av: Dom José Gaspar,
+                            500, Coração Eucarístico - Belo Horizonte - MG.
+                        </li>
+                        <li class="list-group-item">
+                            <span class="fw-bold">Telefone: </span> (31)3131-3131.
+                        </li>
+                        <li class="list-group-item">
+                            <span class="fw-bold">Whatsapp: </span> (31)9999-9999
+                        </li>
+                        <li class="list-group-item">
+                            <span class="fw-bold">Email: </span> contato@BrinquedotecaPUC.com.br
+                        </li>
+                    </ul>
+                </div>
+                <!--Mapa-->
+                <div class="col-md">
+                    <div class="mapa">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3751.0367259786613!2d-43.99516992398336!3d-19.922857138087654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa696fabcd470ed%3A0x79ebb3d3cea6b4ea!2sPUC%20Minas%20-%20Cora%C3%A7%C3%A3o%20Eucar%C3%ADstico!5e0!3m2!1spt-PT!2sbr!4v1681782207729!5m2!1spt-PT!2sbr"
+                                width="600"
+                                height="450"
+                                style="border: 0"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--Footer-->
+    <footer class="p-5 text-white text-center position-relative">
+        <div class="container">
+            <p class="lead">Copyright &copy; 2023 BrinquedotecaPUC</p>
+            <a href="#" class="position-absolute bottom-0 end-0 p-5">
+                <i class="bi bi-arrow-up-circle h1"></i>
+            </a>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            crossorigin="anonymous"></script>
+</body>
+</html>
+

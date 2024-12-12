@@ -1,0 +1,46 @@
+﻿@{
+    string modalMessage = string.Empty; //!string.IsNullOrEmpty(TempData["ModalError"]?.ToString()) ? "Erro" : "Sucesso";
+    string? mensagem = string.Empty; //!string.IsNullOrEmpty(TempData["ModalError"]?.ToString()) ? TempData["ModalError"]?.ToString() : TempData["ModalSuccess"]?.ToString();
+
+    if (!string.IsNullOrEmpty(TempData["ModalError"]?.ToString()))
+    {
+        modalMessage = "Erro";
+        mensagem = TempData["ModalError"]?.ToString();
+    }
+    else if (!string.IsNullOrEmpty(TempData["ModalSuccess"]?.ToString()))
+    {
+        modalMessage = "Sucesso";
+        mensagem = TempData["ModalSuccess"]?.ToString();
+    }
+}
+
+<!-- Modal de Erro -->
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content d-flex" style="position: relative;">
+            @if (modalMessage == "Erro")
+            {
+                <!-- Barra Vermelha Vertical na Esquerda -->
+                <div style="width: 5px; background-color: red; position: absolute; left: 0; top: 0; bottom: 0;"></div>
+            }
+            else
+            {
+                <!-- Barra Verde Vertical na Esquerda -->
+                <div style="width: 5px; background-color: green; position: absolute; left: 0; top: 0; bottom: 0;"></div>
+            }
+
+            <div style="margin-left: 5px; flex-grow: 1;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorModalLabel">@modalMessage</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    @mensagem
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="@Url.Action("LimpaTempVars", "Cliente")" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

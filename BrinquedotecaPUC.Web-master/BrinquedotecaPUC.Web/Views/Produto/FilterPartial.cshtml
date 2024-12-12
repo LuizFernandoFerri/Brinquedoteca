@@ -1,0 +1,32 @@
+﻿@using BrinquedotecaPUC.Web.Models.Produto;
+
+@model ProdutoFiltroViewModel;
+
+@using (Html.BeginForm("ListaProdutos", "Produto", FormMethod.Get, new { id = "formFilter" }))
+{
+    <section>
+        <div class="mt-3 mb-5">
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="codUsuario">Código produto</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control " id="codProduto" asp-for="CodProduto" />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="cpf">Descricao</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="descricao" name="descricao" aria-describedby="basic-addon1" maxlength="14" asp-for="Descricao" />
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-outline-primary btn-sm px-4 mb-3 float-end">
+                    <i class="fa fa-search" aria-hidden="true"> </i><span> Pesquisar </span>
+                </button>
+            </div>
+        </div>
+    </section>
+}

@@ -1,0 +1,63 @@
+﻿@using BrinquedotecaPUC.Web.Models.Usuario;
+@model IEnumerable<UsuarioGridViewModel>
+@{
+}
+
+<!--Tabelas-->
+<section>
+    <!--Lista de Serviços-->
+    <div class="container mt-3">
+        <h5 class="titulo text-light p-2 mb-3 text-left">Lista de usuário cadastrados</h5>
+        <div class="table-responsive">
+            <table class="table table-striped list">
+                <thead>
+                    <tr>
+                        <th scope="col">Código do Usuário</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Tipo Usuário</th>
+                        <th scope="col">Situação</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewData.ModelState["ConfirmPassword"]?.Errors.Count > 0)
+                    {
+                        <tr>
+                            <td colspan="6">@ViewData.ModelState["ServerError"]?.Errors[0].ErrorMessage</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (UsuarioGridViewModel usuario in Model)
+                        {
+                            <tr>
+                                <td>@usuario.CodUsuario</td>
+                                <td>@usuario.Nome</td>
+                                <td>@usuario.Email</td>
+                                @if (usuario.Situacao == true)
+                                {
+                                    <td>Ativo</td>
+                                }
+                                else
+                                {
+                                    <td>Inativo</td>
+                                }
+                                <td>
+                                    <a href="@Url.Action("Editar", "Usuario", new { codUsuario = usuario.CodUsuario })">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Deletar", "Usuario", new { codUsuario = usuario.CodUsuario })">
+                                        <i class="bi bi-trash red-icon"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

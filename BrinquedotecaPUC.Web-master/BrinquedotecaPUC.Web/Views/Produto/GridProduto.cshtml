@@ -1,0 +1,131 @@
+﻿@using BrinquedotecaPUC.Web.Models.Produto;
+
+@model ProdutoGridViewModel
+@{
+}
+
+<!--Lista de clientes-->
+<div class="mt-5">
+    <h5 class="titulo text-light p-1 px-3 mb-3 text-start">
+        <a class="btn" data-bs-toggle="collapse" href="#collapseCliente" role="button" aria-expanded="true" aria-controls="collapseCliente">
+            <i class="fa fa-arrow-circle-o-right"></i><span class="text-light">Produtos cadastrados</span>
+        </a>
+    </h5>
+    <div class="collapse show" id="collapseCliente">
+        <div class="card card-body">
+            <div class="table-responsive">
+                <table class="table table-striped list">
+                    <thead>
+                        <tr class="bg-primary text-light">
+                            <th width="10%">Cod. Produto</th>
+                            <th width="40%" scope="col">Descricao</th>
+                            <th width="24%" scope="col">Categoria</th>
+                            <th width="10%" scope="col">Conservação</th>
+                            <th width="10%" scope="col">Status</th>
+                            <th width="3%" scope="col"></th>
+                            <th width="3%" scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Produtos != null && Model.Produtos.Count() > 0)
+                        {
+                            @if (Model.Produtos != null && Model.Produtos.Count() > 0)
+                            {
+                                @foreach (var produto in Model.Produtos)
+                                {
+                                    <tr id="@produto.IdProduto">
+                                        <td>@produto.CodProduto</td>
+                                        <td>@produto.Descricao</td>
+                                        <td>@produto.DescricaoCategoria</td>
+                                        <td>@produto.EstConservacaoDescricao</td>
+                                        <td>@produto.StatusProduto</td>
+                                        <td>
+                                            <a href="@Url.Action("Editar", "Produto", new { id = produto.IdProduto })">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="#" role="button" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal_@produto.IdProduto">
+                                                <i class="bi bi-trash" style="color: red;" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <!-- Confirm Delete Modal -->
+                                    <div class="modal fade" id="confirmDeleteModal_@produto.IdProduto" tabindex="-1" aria-labelledby="confirmDeleteModalLabel_@produto.IdProduto" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="confirmDeleteModalLabel_@produto.IdProduto">Confirmar exclusão</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Deseja realmente excluir o produto @produto.Descricao?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    <a href="@Url.Action("Deletar", "Produto", new { id = produto.IdProduto })" class="btn btn-danger">Excluir</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5">Nenhum produto encontrado.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <!-- Paginação -->
+                @if (Model.TotalPages > 1)
+                {
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <!-- Botão "Anterior" -->
+                            @if (Model.HasPreviousPage)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("ListarProdutos", new { pageNumber = Model.PageNumber - 1, pageSize = Model.PageSize, filtroViewModel = Model })">Anterior</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="page-item disabled">
+                                    <a class="page-link">Anterior</a>
+                                </li>
+                            }
+
+                            <!-- Números de páginas -->
+                            @for (var i = 1; i <= Model.TotalPages; i++)
+                            {
+                                <li class="page-item @(Model.PageNumber == i ? "active" : "")">
+                                    <a class="page-link" href="@Url.Action("ListarProdutos", new { pageNumber = i, pageSize = Model.PageSize, filtroViewModel = Model })">@i</a>
+                                </li>
+                            }
+
+                            <!-- Botão "Próximo" -->
+                            @if (Model.HasNextPage)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("ListarProdutos", new { pageNumber = Model.PageNumber + 1, pageSize = Model.PageSize, filtroViewModel = Model })">Próximo</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="page-item disabled">
+                                    <a class="page-link">Próximo</a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+

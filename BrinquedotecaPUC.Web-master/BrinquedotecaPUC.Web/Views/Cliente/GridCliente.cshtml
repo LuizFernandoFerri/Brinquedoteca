@@ -1,0 +1,127 @@
+﻿@using BrinquedotecaPUC.Web.Models.Cliente;
+
+@model ClienteGridViewModel
+@{
+}
+
+<!--Lista de clientes-->
+<div class="mt-5">
+    <h5 class="titulo text-light p-1 px-3 mb-3 text-start">
+        <a class="btn" data-bs-toggle="collapse" href="#collapseCliente" role="button" aria-expanded="true" aria-controls="collapseCliente">
+            <i class="fa fa-arrow-circle-o-right"></i><span class="text-light">Clientes cadastrados</span>
+        </a>
+    </h5>
+    <div class="collapse show" id="collapseCliente">
+        <div class="card card-body">
+            <div class="table-responsive">
+                <table class="table table-striped list">
+                    <thead>
+                        <tr class="bg-primary text-light">
+                            <th width="15%">Cod. usuário</th>
+                            <th width="15%" scope="col">CPF</th>
+                            <th width="64%" scope="col">Nome</th>
+                            <th width="3%" scope="col"></th>
+                            <th width="3%" scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Clientes != null && Model.Clientes.Count() > 0)
+                        {
+                            @if (Model.Clientes != null && Model.Clientes.Count() > 0)
+                            {
+                                @foreach (var cliente in Model.Clientes)
+                                {
+                                    <tr id="@cliente.Id">
+                                        <td>@cliente.CodUsuario</td>
+                                        <td>@cliente.CpfFormatado</td>
+                                        <td>@cliente.Nome</td>
+                                        <td>
+                                            <a href="@Url.Action("Editar", "Cliente", new { id = cliente.Id })">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="#" role="button" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal_@cliente.Id">
+                                                <i class="bi bi-trash" style="color: red;" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <!-- Confirm Delete Modal -->
+                                    <div class="modal fade" id="confirmDeleteModal_@cliente.Id" tabindex="-1" aria-labelledby="confirmDeleteModalLabel_@cliente.Id" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="confirmDeleteModalLabel_@cliente.Id">Confirmar exclusão</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Deseja realmente excluir o cliente @cliente.Nome?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    <a href="@Url.Action("Deletar", "Cliente", new { id = cliente.Id })" class="btn btn-danger">Excluir</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5">Nenhum cliente encontrado.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <!-- Paginação -->
+                @if (Model.TotalPages > 1)
+                {
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <!-- Botão "Anterior" -->
+                            @if (Model.HasPreviousPage)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("ListarClientes", new { pageNumber = Model.PageNumber - 1, pageSize = Model.PageSize, filtroViewModel = Model })">Anterior</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="page-item disabled">
+                                    <a class="page-link">Anterior</a>
+                                </li>
+                            }
+
+                            <!-- Números de páginas -->
+                            @for (var i = 1; i <= Model.TotalPages; i++)
+                            {
+                                <li class="page-item @(Model.PageNumber == i ? "active" : "")">
+                                    <a class="page-link" href="@Url.Action("ListarClientes", new { pageNumber = i, pageSize = Model.PageSize, filtroViewModel = Model })">@i</a>
+                                </li>
+                            }
+
+                            <!-- Botão "Próximo" -->
+                            @if (Model.HasNextPage)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("ListarClientes", new { pageNumber = Model.PageNumber + 1, pageSize = Model.PageSize, filtroViewModel = Model })">Próximo</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="page-item disabled">
+                                    <a class="page-link">Próximo</a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+

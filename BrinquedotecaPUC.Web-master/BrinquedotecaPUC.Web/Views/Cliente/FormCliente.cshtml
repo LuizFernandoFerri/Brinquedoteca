@@ -1,0 +1,307 @@
+﻿@using BrinquedotecaPUC.Web.Models.Cliente;
+@model ClienteViewModel
+
+@{
+    var estados = ViewBag.Estados as List<SelectListItem>;
+}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon"
+          type="image/png"
+          href="../image/SVG-BrinquedotecaPUC.png" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+          crossorigin="anonymous" />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <link rel="stylesheet" href="~/css/usuario.css" />
+    <link rel="stylesheet" href="~/css/modal-message.css" />
+    <title>BrinquedotecaPUC - Clientes</title>
+</head>
+<body>
+    <!-- Modal mensagem login-->
+    <div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <h5 class="modal-title" id="loadingModalLabel">Aguarde. Cadastrando cliente...</h5>
+                    <div class="progress mt-3">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Cabeçalho-->
+    <form asp-controller="Cliente" asp-action="Salvar">
+        <section>
+            <partial name="/Views/Shared/_LayoutMenu.cshtml" />
+            <div class="row p-1 px-3" style="background-color: #eeecec;">
+                <div class="d-flex justify-content-end" style="width: 85%;">
+                    <a class="btn btn btn-outline-dark btn-sm px-2 mt-1 mb-1 me-2" href="@Url.Action("Index", "Cliente")" role="button">
+                        <i class="fa fa-reply"></i> <span class="hidden-xs"> Voltar Filtro </span>
+                    </a>
+                    <button id="btnSalvar" type="submit" class="btn btn-primary btn-sm px-4 mt-1 mb-1">
+                        <i class="fa fa-check"></i><span class="hidden-xs"> Salvar </span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Situacao)
+        @Html.HiddenFor(model => model.IsEdit)
+
+        <!--Form-->
+        <section>
+            <div class="container mt-1">
+                <h4 class="text-start p-1 px-3 mb-3 mt-3 titulo text-light">
+                    <a class="btn" data-bs-toggle="collapse" href="#formCliente" role="button" aria-expanded="true" aria-controls="formCliente">
+                        <i class="fa fa-arrow-circle-o-right"></i><span class="text-light">Cadastro do cliente</span>
+                    </a>
+                </h4>
+                <div class="collapse show" id="formCliente">
+                    <div class="card card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="CpfFormatado">CPF</label>
+                                <div class="input-group mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="CpfFormatado"
+                                           name="CpfFormatado"
+                                           aria-label="CPF"
+                                           aria-describedby="basic-addon1"
+                                           maxlength="14"
+                                           asp-for="CpfFormatado"
+                                           oninput="formatarCPF(this)" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="nome">Nome</label>
+                                <div class="input-group mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="nome"
+                                           aria-label="Nome do cliente"
+                                           aria-describedby="basic-addon2"
+                                           asp-for="Nome" />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="idDtNascimento">Data nascimento</label>
+                                <div class="input-group mb-3">
+                                    <input type="date"
+                                           class="form-control"
+                                           id="dtNascimento"
+                                           aria-describedby="basic-addon3 basic-addon4"
+                                           asp-for="DataNascimento" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            @* v-model="cep" *@
+                            @* onclick="this.value=''" *@
+                            <div id="app" class="form-group col-md-2">
+                                <label for="cep">CEP</label>
+                                <div class="input-group mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="cep"
+                                           maxlength="9"
+                                           placeholder="CEP"
+                                           asp-for="Cep"
+                                           oninput="formatarCEP(this)" />
+                                </div>
+                            </div>
+                            <!-- INÍCIO DIV CONTEÚDO DO FORM LOGRADOURO -->
+                            <div class="form-group col-md-8">
+                                <label for="endereco">Endereço</label>
+                                <div class="input-group mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="endereco"
+                                           asp-for="Logradouro" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="numero">Número</label>
+                                <div class="input-group mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="numero"
+                                           placeholder="Número"
+                                           asp-for="Numero" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label for="bairro">Bairro</label>
+                                <div class="input-group mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="bairro"
+                                           asp-for="Bairro" />
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <label for="complemento">Complemento</label>
+                                <div class="input-group mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="complemento"
+                                           asp-for="Complemento" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label for="cidade">Cidade</label>
+                                <div class="input-group">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="cidade"
+                                           asp-for="Cidade" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="estado">Estado</label>
+                                <div class="input-group mb-3">
+                                    <select id="estado" class="form-select .inner.show{ max-height: 450px !important; }" asp-for="Estado" asp-items="estados">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label for="telefone">Telefone</label>
+                                <div class="input-group mb-3">
+                                    <input type="tel"
+                                           class="form-control"
+                                           id="telefone"
+                                           maxlength="15"
+                                           asp-for="Telefone" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label for="celular">Celular</label>
+                                <div class="input-group mb-3">
+                                    <input type="tel"
+                                           class="form-control"
+                                           id="celular"
+                                           asp-for="Celular"
+                                           maxlength="15"
+                                           oninput="formataCelularInput(this)" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="nome">Código de usuário</label>
+                                <div class="input-group mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="nome"
+                                           aria-label="Código de usuário"
+                                           aria-describedby="basic-addon2"
+                                           maxlength="30"
+                                           asp-for="CodUsuario" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+
+    @* <div class="mt-5">
+        <h5 class="titulo text-light p-1 px-3 mb-3 text-start">
+            <a class="btn" data-bs-toggle="collapse" href="#formCliente" role="button" aria-expanded="true" aria-controls="formCliente">
+                <i class="fa fa-arrow-circle-o-right"></i><span class="text-light">Clientes cadastrados</span>
+            </a>
+        </h5>
+        <div class="collapse show" id="formCliente">
+            <div class="card card-body">
+
+            </div>
+        </div>
+    </div> *@
+
+    <partial name="/Views/Shared/_ModalError.cshtml" />
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            crossorigin="anonymous"></script>
+
+    <script src="~/Scripts/App/Cliente/form-cliente.js"></script>
+
+    <script>
+        // document.addEventListener("DOMContentLoaded", function () {
+        //    var form = document.querySelector("form");
+        //    form.addEventListener("submit", function () {
+        //       var loadingModal = new bootstrap.Modal(document.getElementById("loadingModal"));
+        //       loadingModal.show();
+        //    });
+        // });
+
+        var errorMessage = '@TempData["ModalError"]';
+        var successMessage = '@TempData["ModalSuccess"]';
+        if (errorMessage || successMessage) {
+            var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+            errorModal.show();
+        }
+
+        // function formatarCPF(cpfInput) {
+        //     let cpf = cpfInput.value;
+        //     cpf = cpf.replace(/\D/g, ''); // Remove todos os caracteres que não são dígitos
+        //     cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2'); // Insere um ponto após os próximos 3 dígitos
+        //     cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2'); // Insere um ponto após os próximos 3 dígitos
+        //     cpf = cpf.replace(/(\d{3})(\d)/, '$1-$2'); // Insere um traço após os próximos 3 dígitos
+        //     cpfInput.value = cpf;
+        // }
+
+        // function formatarCEP(cepInput) {
+        //     let cep = cepInput.value;
+        //     cep = cep.replace(/\D/g, '');
+        //     cep = cep.replace(/(\d{5})(\d)/, '$1-$2');
+        //     cepInput.value = cep;
+        // }
+
+        // function formataTelefoneFixoInput(telefoneFixoInput) {
+        //     let telefoneFixo = celularInput.value;
+        //     telefoneFixo = telefoneFixo.replace(/\D/g, '');
+        //     telefoneFixo = telefoneFixo.replace(/(\d{0})(\d)/, '$1($2');
+        //     telefoneFixo = telefoneFixo.replace(/(\d{2})(\d)/, '$1) $2');
+        //     telefoneFixo = telefoneFixo.replace(/(\d{4})(\d)/, '$1-$2');
+        //     telefoneFixoInput.value = telefoneFixo;
+        // }
+
+        // function formataCelularInput(celularInput) {
+        //     let celular = celularInput.value;
+        //     celular = celular.replace(/\D/g, '');
+        //     celular = celular.replace(/(\d{0})(\d)/, '$1($2');
+        //     celular = celular.replace(/(\d{2})(\d)/, '$1) $2');
+        //     celular = celular.replace(/(\d{5})(\d)/, '$1-$2');
+        //     celularInput.value = celular;
+        // }
+    </script>
+</body>
+
+</html>

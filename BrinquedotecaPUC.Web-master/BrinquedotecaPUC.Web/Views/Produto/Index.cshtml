@@ -1,0 +1,97 @@
+﻿@using BrinquedotecaPUC.Web.Controllers
+@using BrinquedotecaPUC.Web.Models.Produto;
+
+@model ProdutoGridViewModel
+
+@{
+
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="~/image/SVG-Brinquedoteca.png" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+          crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <link rel="stylesheet" href="~/css/usuario.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <title>BrinquedotecaPUC - Produto</title>
+</head>
+<body>
+
+    <!--Cabeçalho-->
+    <section>
+        <partial name="/Views/Shared/_LayoutMenu.cshtml" />
+        <div class="row p-1 px-3" style="background-color: #eeecec;">
+            <div class="container" style="max-width: 70%;">
+                <div class="d-flex justify-content-end">
+                    <a class="btn btn-primary btn-sm px-2 mt-1 mb-1 me-2" href="@Url.Action("Create", "Produto")" role="button">
+                        <i class="fa fa-plus" aria-hidden="true"> </i><span> Novo Brinquedo </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <div class="container">
+        <section>
+            <!-- FORM DE PESQUISA DE PRODUTOS -->
+            <partial name="FilterPartial.cshtml" />
+        </section>
+
+        <section id="gridContainer">
+            <!-- GRID LISTA DE PRODUTOS -->
+            <partial name="GridProduto.cshtml" model="Model" />
+        </section>
+
+        <!-- Modal de Erro -->
+        <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="errorModalLabel">Erro</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        @TempData["ErroCliente"]
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            crossorigin="anonymous"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var errorMessage = '@TempData["ErroCliente"]';
+            if (errorMessage) {
+                var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                errorModal.show();
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script src="~/Scripts/App/Cliente/cliente.js"></script>
+
+</body>
+
+</html>

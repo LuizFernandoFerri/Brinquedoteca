@@ -1,0 +1,20 @@
+﻿/* Barra vertical colorida */
+.barra-vertical {
+    width: 5px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.barra-erro {
+    background-color: red;
+}
+
+.barra-alerta {
+    background-color: yellow;
+}
+
+.barra-sucesso {
+    background-color: green;
+}

@@ -1,0 +1,35 @@
+﻿:root {
+    --cor-principal: #00385e;
+    --cor-secundaria: #0092f7;
+    --cor-terciaria: #0074c4;
+    --cor-cinza: #e6e6e6;
+    --cor-fundo: #ffffff;
+}
+
+body::before {
+    display: block;
+    content: "";
+    height: 120px;
+}
+
+.img-logo {
+    max-width: 50%;
+}
+
+.login input:focus {
+    box-shadow: none;
+}
+
+.btn-acessar {
+    padding: 15px;
+    font-weight: bold;
+    font-size: 18px;
+    background: var(--cor-terciaria);
+    border-color: var(--cor-terciaria);
+}
+
+.btn-acessar:hover {
+    background: var(--cor-principal);
+    border-color: var(--cor-principal);
+    transition: 0.2s ease-in-out;
+}

@@ -1,0 +1,37 @@
+﻿:root {
+    --cor-principal: #00385e;
+    --cor-secundaria: #0092f7;
+    --cor-terciaria: #0074c4;
+    --cor-cinza: #e6e6e6;
+    --cor-fundo: #ffffff;
+    --cor-fundo-primaria: #EB9486;
+}
+
+body::before {
+    display: block;
+    content: "";
+    height: 0px;
+}
+
+.nav-link:hover {
+    color: var(--cor-terciaria) !important;
+    transition: 0.2s ease-in-out;
+}
+
+.btn-config:hover {
+    color: var(--cor-terciaria) !important;
+    transition: 0.2s ease-in-out;
+}
+
+.fundo-cinza {
+    background: var(--cor-cinza);
+}
+
+.titulo {
+    background: var(--cor-principal);
+    border-radius: 5px;
+}
+
+.table-responsive {
+    border-radius: 5px;
+}
